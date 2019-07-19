@@ -51,7 +51,7 @@
 ```RORT(config)#ip route 0.0.0.0 0.0.0.0 Dialer 0```
 - DCRT1 および DCRT2 において次の通り BGP を動作させる。※ISP-A は AS200、ISP-B は AS300、ISP-C は AS600 所属として BGP が動作している。
 	- DCRT1 と DCRT2 は AS100 所属として BGP を動作させる。  
-	```DCRT1(config)#router bgp 100```
+	```DCRT1(config)#router bgp 100```　　
     ```DCRT2(config)#router bgp 100```
 	- DCRT1 は ISP-A と eBGP ピアを確立する。
 	```
