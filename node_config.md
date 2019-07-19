@@ -50,26 +50,30 @@
 - RORTのデフォルトルート(Dialer0)を静的に設定する。  
 ```RORT(config)#ip route 0.0.0.0 0.0.0.0 Dialer 0```
 - DCRT1 および DCRT2 において次の通り BGP を動作させる。※ISP-A は AS200、ISP-B は AS300、ISP-C は AS600 所属として BGP が動作している。
-	- DCRT1 と DCRT2 は AS100 所属として BGP を動作させる。  
-	```DCRT1(config)#router bgp 100```　　
-    ```DCRT2(config)#router bgp 100```
+	- DCRT1 と DCRT2 は AS100 所属として BGP を動作させる。
+	```
+	DCRT1(config)#router bgp 100
+	```
+	```
+	DCRT2(config)#router bgp 100
+	```
 	- DCRT1 は ISP-A と eBGP ピアを確立する。
 	```
-    DCRT1(config-router)#neighbor 200.100.10.2 remote-as 200
-    ```
+    	DCRT1(config-router)#neighbor 200.100.10.2 remote-as 200
+    	```
 	- DCRT2 は ISP-B と eBGP ピアを確立する。	
 	```
-    DCRT2(config-router)#neighbor 200.100.20.2 remote-as 300
-    ```
+    	DCRT2(config-router)#neighbor 200.100.20.2 remote-as 300
+    	```
 	- インターネット側から 20.0.0.0/28 宛てのトラフィックについて、ISP-B→DCRT2 を経由する 経路を優先経路とする。この経路に障害が発生した場合は、ISP-A→DCRT1 を経由する経路に 自律的に切り替わること。
 	```
-    DCRT1(config-router)#network 20.0.0.0 mask 255.255.255.240
-    DCRT1(config-rputer)#neighbor 200.100.10.2 weight 100
-    ```
-    ```
-    DCRT2(config-router)#network 20.0.0.0 mask 255.255.255.240
-    DCRT2(config-router)#neighbor 200.100.10.2 weight 200
-    ```
+    	DCRT1(config-router)#network 20.0.0.0 mask 255.255.255.240
+    	DCRT1(config-rputer)#neighbor 200.100.10.2 weight 100
+    	```
+    	```
+    	DCRT2(config-router)#network 20.0.0.0 mask 255.255.255.240
+    	DCRT2(config-router)#neighbor 200.100.10.2 weight 200
+    	```
 - RORT,DCRT1,DCRT2 において次の通り OSPF を動作させる
 	- プライベートアドレスセグメントについて経路交換を行う。
 	```
