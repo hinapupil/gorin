@@ -93,7 +93,7 @@
     ```
     
 	```
-   	RORT(config)#router ospf 1
+	RORT(config)#router ospf 1
     RORT(config-router)#network　172.16.1.0 0.0.0.255 area 0
     RORT(config-router)#network 20.0.0.0 0.0.0.15 area 0
     RORT(config-router)#network 192.168.101.0 0.0.0.255 area 0
