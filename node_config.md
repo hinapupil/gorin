@@ -1,21 +1,19 @@
 # Ciscoネットワークノード設定課題
 
 ##  便利設定
-- コマンド誤入力によるDNS検索を行わない。
+- コマンド誤入力によるDNS検索を行わない。  
 ```Router(config)#no ip domain-lookup```
 
-- コマンド履歴バッファの保存数を100行に設定する。
+- コマンド履歴バッファの保存数を100行に設定する。  
 ```Router#terminal history size 100```
 
-- ルータ上のHTTPサーバは停止する。
+- ルータ上のHTTPサーバは停止する。  
 ```Router(config)#no ip http server```
 
-
-- 日時を手動設定する。競技場との誤差は５分以内にする。
+- 日時を手動設定する。競技場との誤差は５分以内にする。  
 ```Router#clock set 21:10:00 14 June 2019```
 
-
-- コンソール接続時、自動ログアウト機能を無効にする。
+- コンソール接続時、自動ログアウト機能を無効にする。  
     ```
     Router(config)#line console 0
     Router(config-line)#exec-timeout 0 0
@@ -23,19 +21,19 @@
     Router(config-line)#no exec-timeout
     ```
     
-- コンソール接続時、表示割込みに対する入力文字列の保管を有効にする。
+- コンソール接続時、表示割込みに対する入力文字列の保管を有効にする。  
     ```
     Router(config)#line console 0
     Router(config-line)#logging synchronous
     ```
 
-- コンソール接続時、--More--機能を無効にする。
+- コンソール接続時、--More--機能を無効にする。  
     ```
     Router(config)#line console 0
     Router(config-line)#length 0
     ```
 
-- telnet 接続時、５分操作が行われなかった場合、自動ログアウトする。
+- telnet 接続時、５分操作が行われなかった場合、自動ログアウトする。  
     ```
     Router(config)#line vty 0 4
     Router(config-line)#exec-timeout 5 0
