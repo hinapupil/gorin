@@ -1,10 +1,5 @@
-疑問
-mss サイズどうする問題
-
-te
-
-WAN設定
-    PPPoEクライアント設定
+# WAN設定
+### PPPoEクライアント設定
         int gi0/0
             pppoe-client dial-pool-number 1
             no shut
