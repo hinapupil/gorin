@@ -1,8 +1,11 @@
-# おすすめ
+# おすすめ設定
     vim ~/.vimrc  
     set syntax on  
     set number  
     set tabstop=4
+    echo "alias ls='ls --color'" >> /etc/profile
+    echo "alias ..='cd ..'" >> /etc/profile
+    echo "alias c='clear'" >> /etc/profile
 # WAN設定
 ### PPPoEクライアント設定
     int gi0/0
@@ -49,8 +52,8 @@
         crypto map M-ipsec
     ip access-list extended A-ipsec
         permit ip 192.168.1.0 0.0.0.255 192.168.2.0 0.0.0.255 //自分側　相手側
-### samba
-#### server
+# samba
+### server
     apt -y install samba
     vim /etc/samba/smb.conf
     
@@ -69,7 +72,27 @@
     mkdir /home/user/samaba
     chgrp share_group
     chmod 770 /home/user/samaba
-#### client
+### client
     apt -y install cifs-utils
     mkdir ~/test
-    mount.cifs //192.168.1.11/home ~/test -o username=user  
+    mount.cifs //192.168.1.11/home ~/test -o username=user 
+# ロードバランサ
+    apt -y install haproxy
+    vim /etc/haproxy/haproxy.cfg
+
+    frontend web_proxy_http
+    default_backend web_servers_http
+    bind *:80
+
+    frontend web_proxy_https
+    default_backend web_servers_https
+    bind *:443
+
+    backend web_servers_http
+    server web01 192.168.1.1:80
+    server web02 192.168.1.2:80
+
+    backend web_servers_https
+    server web01 192.168.1.1:443
+    server web02 192.168.1.2:443
+    
