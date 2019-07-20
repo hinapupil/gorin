@@ -1,3 +1,8 @@
+# おすすめ
+    vim ~/.vimrc  
+    set syntax on  
+    set number  
+    set tabstop=4
 # WAN設定
 ### PPPoEクライアント設定
         int gi0/0
@@ -44,3 +49,7 @@
             crypto map M-ipsec
         ip access-list extended A-ipsec
             permit ip 192.168.1.0 0.0.0.255 192.168.2.0 0.0.0.255 //自分側　相手側
+### samba
+        apt -y install samba
+        vim /etc/samba/smb.conf
+        
