@@ -86,7 +86,8 @@ chmod 770 /home/user/samaba
 ```
 apt -y install cifs-utils
 mkdir ~/test
-mount.cifs //192.168.1.11/home ~/test -o username=user 
+echo "mount.cifs //192.168.1.11/home ~/test -o username=user,password=Pass">> /etc/profile
+source /etc/profile
 ```
 # Load balancer
 ```
