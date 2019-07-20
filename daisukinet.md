@@ -6,6 +6,8 @@ set number
 set tabstop=4
 ```
 ```
+echo "alias mkdir='mkdir -p'" >> /etc/profile
+echo "alias rm='rm -r'" >> /etc/profile
 echo "alias ls='ls --color'" >> /etc/profile
 echo "alias ..='cd ..'" >> /etc/profile
 echo "alias c='clear'" >> /etc/profile
