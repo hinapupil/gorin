@@ -50,7 +50,7 @@ crypto map M-ipsec 1 ipsec-isakmp
     set transform-set IPSEC
     match address A-ipsec
 //int loopback 1
-    //ip add 100.1.1.1 255.255.255.255 //自分側
+    //ip add 100.1.1.1 255.255.255.255 //local
 int gi0/0
     pppoe enable group global
 int dialer 1
