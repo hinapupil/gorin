@@ -1,6 +1,6 @@
 # Recommend
 ```
-vim ~/.vimrc1  
+vim ~/.vimrc  
 set syntax on  
 set number  
 set tabstop=4
