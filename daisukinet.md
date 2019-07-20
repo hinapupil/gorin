@@ -15,7 +15,7 @@ int gi0/0
     pppoe-client dial-pool-number 1
     no shut
 int gi0/1
-    ip add 192.168.1.254 255.255.255.0 //ローカル側
+    ip add 192.168.1.254 255.255.255.0 //local
     ip nat inside
     ip tcp adjust-mss 1414
     no shut
@@ -32,7 +32,7 @@ int dialer1
     ppp chap password skills
 ip route 0.0.0.0 0.0.0.0 dialer 1
 ip nat inside source list 1 interface dialer 1 overload
-access-list 1 permit 192.168.1.0 0.0.0.255 //ローカル側
+access-list 1 permit 192.168.1.0 0.0.0.255 //local
 //dialer-list 1 protocol ip permit
 ```
 ### IPsecVPN
