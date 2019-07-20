@@ -57,6 +57,7 @@
     [Home]
     hosts allow = 192.168.1.0/24
     path = /home/user/samaba
+    #guest ok = yes
     writable = yes
     valid users = @share_group
     
