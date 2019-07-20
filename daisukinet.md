@@ -42,11 +42,11 @@ crypto isakmp policy 1
     hash md5
     authentication pre-share
     group 2
-crypto isakmp key cisco address 200.1.1.1 //相手側
+crypto isakmp key cisco address 200.1.1.1 //remote
 crypto isakmp keepalive 30 periodic
 crypto ipsec transform-set IPSEC esp-3des esp-md5-hmac
 crypto map M-ipsec 1 ipsec-isakmp
-    set peer 200.1.1.1 //相手側
+    set peer 200.1.1.1 //remote
     set transform-set IPSEC
     match address A-ipsec
 //int loopback 1
