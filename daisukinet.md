@@ -50,6 +50,23 @@
         ip access-list extended A-ipsec
             permit ip 192.168.1.0 0.0.0.255 192.168.2.0 0.0.0.255 //自分側　相手側
 ### samba
-        apt -y install samba
-        vim /etc/samba/smb.conf
-        
+#### server
+    apt -y install samba
+    vim /etc/samba/smb.conf
+    
+    [Home]
+    hosts allow = 192.168.1.0/24
+    path = /home/user/samaba
+    writable = yes
+    valid users = @share_group
+    
+    useradd -m user
+    passwd user
+    smbpasswd -a user
+    groupadd share_group
+    gpasswd -a user share_group
+    mkdir /home/user/samaba
+    chgrp share_group
+    chmod 770 /home/user/samaba
+#### client
+    apt -y install cifs-utils
