@@ -70,3 +70,5 @@
     chmod 770 /home/user/samaba
 #### client
     apt -y install cifs-utils
+    mkdir ~/test
+    mount.cifs //192.168.1.11/home ~/test -o username=user  
