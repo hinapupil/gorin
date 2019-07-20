@@ -56,7 +56,7 @@ int gi0/0
 int dialer 1
     crypto map M-ipsec
 ip access-list extended A-ipsec
-    permit ip 192.168.1.0 0.0.0.255 192.168.2.0 0.0.0.255 //自分側　相手側
+    permit ip 192.168.1.0 0.0.0.255 192.168.2.0 0.0.0.255 //local remote
 ```
 # Samba
 ### Server
@@ -113,7 +113,7 @@ backend web_servers_https
 server web01 192.168.1.1:443
 server web02 192.168.1.2:443
 ```
-# Generate CA
+# CA
 ```
 cd /ca/private
 openssl genrsa -aes128 2048 > server.key
