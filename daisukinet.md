@@ -23,7 +23,7 @@
         ip nat inside source list 1 interface dialer 1 overload
         access-list 1 permit 192.168.1.0 0.0.0.255 //ローカル側
         //dialer-list 1 protocol ip permit
-    IPsecVPN
+### IPsecVPN
         crypto isakmp policy 1
             encryption 3des
             hash md5
