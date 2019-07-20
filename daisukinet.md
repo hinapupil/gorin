@@ -113,7 +113,7 @@ backend web_servers_https
 server web01 192.168.1.1:443
 server web02 192.168.1.2:443
 ```
-# CA1
+# CA
 ```
 cd /ca/private
 openssl genrsa -aes128 2048 > server.key
