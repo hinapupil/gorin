@@ -1,12 +1,12 @@
 # Recommend
 ```
-    vim ~/.vimrc  
-    set syntax on  
-    set number  
-    set tabstop=4
-    echo "alias ls='ls --color'" >> /etc/profile
-    echo "alias ..='cd ..'" >> /etc/profile
-    echo "alias c='clear'" >> /etc/profile
+vim ~/.vimrc  
+set syntax on  
+set number  
+set tabstop=4
+echo "alias ls='ls --color'" >> /etc/profile
+echo "alias ..='cd ..'" >> /etc/profile
+echo "alias c='clear'" >> /etc/profile
 ```
 # WAN
 ### PPPoE Client
