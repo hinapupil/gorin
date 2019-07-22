@@ -169,6 +169,7 @@ vim /etc/bind9/db.netad.it.jp
 ```
 Add records by the case...
 EX:
+    @ IN NS sv1.example.org // example.orgの管理を行うサーバーはsv1.example.orgです
     @ IN A 192.168.1.1 // @.example.org is example.org
     www IN A 192.168.1.1 // www.example.org is 192.168.1.1
     local-www IN CNAME www.example.org. // 別名
