@@ -4,6 +4,7 @@ $apt install redis-server
 $redis-cli set skills:index "Today is the 2019-01-01 and current time is 00:00"
 ```
 
+~/today.sh
 ```bash:today:sh
 #!/bin/bash
 today=$(date "+%Y-%m-%d")
