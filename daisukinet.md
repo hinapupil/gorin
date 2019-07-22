@@ -17,27 +17,24 @@ echo "alias c='clear'" >> /etc/profile
 ```
 int gi0/0
     pppoe-client dial-pool-number 1
-    no shut
 int gi0/1
-    ip add 192.168.1.254 255.255.255.0 //local
+    ip add 192.168.1.254 255.255.255.0
     ip nat inside
     ip tcp adjust-mss 1414
-    no shut
-int dialer1
-    ip address negotiated
+int dialer 1
+    ip add nego
     ip mtu 1454
     ip nat outside
-    no cdp enable
-    encapsulation ppp
+    enc ppp
     dialer pool 1
-    //dialer-group 1
-    ppp authentication chap callin
-    ppp chap hostname skills
-    ppp chap password skills
+    dialer-g 1
+    ppp auth chap call
+    ppp chap host test1@example.com
+    ppp chap pass Cisco123
 ip route 0.0.0.0 0.0.0.0 dialer 1
-ip nat inside source list 1 interface dialer 1 overload
-access-list 1 permit 192.168.1.0 0.0.0.255 //local
-//dialer-list 1 protocol ip permit
+ip nat inside source list 1 int dialer 1 overload
+access-list 1 permit 192.168.1.0 0.0.0.255
+dialer-list 1 protocol ip permit
 ```
 ### IPsecVPN With PPPoE
 ```
