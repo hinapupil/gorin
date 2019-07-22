@@ -141,6 +141,37 @@
 - DCRT1 と RORT を IPsecVPN 接続する。
     - DCRT1-RORT 間に 10.1.0.0/30（DCRT1 側が若番）のアドレスを使用したトンネルインターフェ ース Tunnel0 を作成し、IPSec VTI(Vitual Tunnel Interface)として設定する。
 
+# ゲートウェイの冗長化  
+DCRT1 と DCRT2 において、以下の条件を満足するようにゲートウェイの冗長構成を実現しなさい。
+- VLAN20 について、VRRP を次の通り動作させる。
+	- DCRT2 を Master ルータとする。
+```
+DCRT2(config) # interface vlan 20
+DCRT2(config-if) # ip address 192.169.101.254 255.255.255.0
+DCRT2(config-if) # vrrp 20 ip 192.169.101.254
+```
+```
+DCRT1(config) # interface vlan 20
+DCRT1(config-if) # ip address  192.169.101.253 255.255.255.0
+DCRT1(config-if) # vrrp 20 ip 192.168.101.254
+```
+
+- VLAN101 について、HSRP を次の通り動作させる。
+	- DCRT1 を Active ルータとする。
+```
+DCRT1(config) # interface vlan 101
+DCRT1(config-if) # ip address 20.0.0.14 255.255.255.240
+DCRT1(config-if) # standby 101 ip 20.0.0.14
+DCRT1(config-if) # standby 101 priority 105
+DCRT1(config-if) # standby 101 preempt
+```
+```
+DCRT2(config) # interface vlan 101
+DCRT2(config-if) # ip address 20.0.0.13 255.255.255.0
+DCRT2(config-if) # standby 101 ip 20.0.0.14
+DCRT2(config-if) # standby 101 priority 100
+```
+
 # アクセスコントロール
 アクセスコントロール RORT の Dialer0 での通信について、アクセスコントロールを以下の通り設定しなさい。
 - すべての送信元から RORT 自身に対する ICMP トラフィックを許可する。  
