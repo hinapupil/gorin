@@ -156,7 +156,7 @@ DCRT1(config-if) # ip address  192.169.101.253 255.255.255.0
 DCRT1(config-if) # vrrp 20 ip 192.168.101.254
 ```
 
-- VLAN101 について、[HSRP](https://www.infraexpert.com/study/fhrpz07.html) を次の通り動作させる。
+- VLAN101 について、[HSRP](https://www.infraexpert.com/study/fhrpz02.html) を次の通り動作させる。
 	- DCRT1 を Active ルータとする。
 ```
 DCRT1(config) # interface vlan 101
