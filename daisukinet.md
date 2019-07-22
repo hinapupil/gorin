@@ -49,7 +49,6 @@ crypto isakmp policy 1
 crypto isakmp key cisco address 200.1.1.1
 crypto isakmp keepalive 30 periodic
 crypto ipsec transform-set IPSEC esp-3des esp-md5-hmac
-!
 crypto map M-ipsec 1 ipsec-isakmp
     set peer 200.1.1.1
     set transform-set IPSEC
