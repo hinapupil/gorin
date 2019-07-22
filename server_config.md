@@ -56,5 +56,6 @@ $vi /root/web_sync.sh
 web_sync.sh
 
 ```bash:web_sync.sh
+#!/bin/bash
 rsync -auvz -delete /var/www www2@20.0.0.4:/var/www
 ```
