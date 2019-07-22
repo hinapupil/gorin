@@ -42,56 +42,45 @@ access-list 1 permit 192.168.1.0 0.0.0.255 //local
 ### IPsecVPN With PPPoE
 ```
 crypto isakmp policy 1
-encry 3des
-hash md5
-authentication pre-share
-group 2
-!
+    encry 3des
+    hash md5
+    authentication pre-share
+    group 2
 crypto isakmp key cisco address 200.1.1.1
 crypto isakmp keepalive 30 periodic
-!
 crypto ipsec transform-set IPSEC esp-3des esp-md5-hmac
 !
 crypto map M-ipsec 1 ipsec-isakmp
-set peer 200.1.1.1
-set transform-set IPSEC
-match address A-ipsec
-!
-!
+    set peer 200.1.1.1
+    set transform-set IPSEC
+    match address A-ipsec
 interface Loopback1
-ip address 100.1.1.1 255.255.255.255
-!
+    ip address 100.1.1.1 255.255.255.255
 interface GigabitEthernet 0/0
-pppoe enable group global
-pppoe-client dial-pool-number 1
-no cdp enable
-!
+    pppoe enable group global
+    pppoe-client dial-pool-number 1
+    no cdp enable
 interface GigabitEthernet0/1
-ip address 192.168.1.254 255.255.255.0
-ip tcp adjust-mss 1356
-!
+    ip address 192.168.1.254 255.255.255.0
+    ip tcp adjust-mss 1356
 interface Dialer1
-ip unnumbered Loopback1
-ip access-group A-security in
-ip mtu 1454
-encapsulation ppp
-dialer pool 1
-dialer-group 1
-no cdp enable
-ppp authentication chap callin
-ppp chap hostname cisco@cisco.com
-ppp chap password cisco
-crypto map M-ipsec
-!
+    ip unnumbered Loopback1
+    ip access-group A-security in
+    ip mtu 1454
+    encapsulation ppp
+    dialer pool 1
+    dialer-group 1
+    no cdp enable
+    ppp authentication chap callin
+    ppp chap hostname cisco@cisco.com
+    ppp chap password cisco
+    crypto map M-ipsec
 ip route 0.0.0.0 0.0.0.0 Dialer1
-!
 ip access-list extended A-ipsec
-permit ip 192.168.1.0 0.0.0.255 192.168.2.0 0.0.0.255
-!
+    permit ip 192.168.1.0 0.0.0.255 192.168.2.0 0.0.0.255
 ip access-list extended A-security
-permit esp host 200.1.1.1 host 100.1.1.1
-permit udp host 200.1.1.1 host 100.1.1.1 eq isakmp
-!
+    permit esp host 200.1.1.1 host 100.1.1.1
+    permit udp host 200.1.1.1 host 100.1.1.1 eq isakmp
 dialer-list 1 protocol ip permit
 ```
 # Samba
