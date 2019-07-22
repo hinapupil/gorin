@@ -168,6 +168,12 @@ zone "netad.it.jp" {
 vim /etc/bind9/db.netad.it.jp
 ```
 Add records by the case...
+EX:
+    www IN A sv1.example.org.
+    www IN A 192.168.1.1
+    local-www IN CNAME www.example.org.
+    1.1.168.192.in-addr.arpa. IN PTR sv1.example.org.
+    mail IN MAX 10 sv1.example.org.
 ```
 ## dcin
 vim /etc/bind9/named.conf.options
