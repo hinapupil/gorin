@@ -147,12 +147,10 @@
 ```access-list 100 permit icmp   host any Dialer 0```
 
 - RORT と DCRT1 間の通信はすべて許可する。  
-```access-list 100 permit any 200.100.10.1 Dialer 0
-```
+```access-list 100 permit any 200.100.10.1 Dialer 0```
 
-- RORT と DCRT2 間の通信はすべて許可する。
-```access-list 100 permit any 200.100.20.1 Dialer 0
-```
+- RORT と DCRT2 間の通信はすべて許可する。  
+```access-list 100 permit any 200.100.20.1 Dialer 0```
 
 - ROLAN からの NAPT された発信トラフィックとそれに対する戻りトラフィックを許可する。
 ```
