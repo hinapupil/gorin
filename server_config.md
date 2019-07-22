@@ -46,3 +46,10 @@ $mkdir /var/www/html/redis
  echo $content;
 ?>
 ```
+
+# Web contents sync
+```
+$apt install rsync
+$vi /root/web_sync.sh
+rsync -auvz -delete /var/www www2@20.0.0.4:/var/www
+```
