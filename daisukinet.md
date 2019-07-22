@@ -169,11 +169,11 @@ vim /etc/bind9/db.netad.it.jp
 ```
 Add records by the case...
 EX:
-    www IN A sv1.example.org.
-    www IN A 192.168.1.1
-    local-www IN CNAME www.example.org.
-    1.1.168.192.in-addr.arpa. IN PTR sv1.example.org.
-    mail IN MAX 10 sv1.example.org.
+    @ IN A 192.168.1.1 // @.example.org is example.org
+    www IN A 192.168.1.1 // www.example.org is 192.168.1.1
+    local-www IN CNAME www.example.org. // 別名
+    1.1.168.192.in-addr.arpa. IN PTR sv1.example.org. // 逆引き
+    mail IN MAX 10 sv1.example.org. //10 is priority
 ```
 ## dcin
 vim /etc/bind9/named.conf.options
