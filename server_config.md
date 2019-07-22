@@ -17,9 +17,9 @@ $apt install apache2 php php-redis
 
 /etc/apache2/mods-enabled/dir.conf
 - 2nd line: Set the file name accessible only by the directory name
-```
-DirectoryIndex index.php
-```
+  ```
+  DirectoryIndex index.php
+  ```
 
 /var/www/html/index.html
 ```
