@@ -13,7 +13,7 @@ echo "alias ..='cd ..'" >> /etc/profile
 echo "alias c='clear'" >> /etc/profile
 ```
 # WAN
-### PPPoE Client
+## PPPoE Client
 ```
 int gi0/0
     pppoe-client dial-pool-number 1
@@ -36,7 +36,7 @@ ip nat inside source list 1 int dialer 1 overload
 access-list 1 permit 192.168.1.0 0.0.0.255
 dialer-list 1 protocol ip permit
 ```
-### IPsecVPN With PPPoE
+## IPsecVPN With PPPoE
 ```
 crypto isakmp policy 1
     encry 3des
@@ -80,7 +80,7 @@ ip access-list extended A-security
 dialer-list 1 protocol ip permit
 ```
 # Samba
-### Server
+## Server
 ```
 apt -y install samba
 ```
@@ -103,7 +103,7 @@ mkdir /home/user/samaba
 chgrp share_group
 chmod 770 /home/user/samaba
 ```
-### Client
+## Client
 ```
 apt -y install cifs-utils
 mkdir ~/test
@@ -114,9 +114,6 @@ source /etc/profile
 ```
 apt -y install haproxy
 ```
-    
-
-
 vim /etc/haproxy/haproxy.cfg
 ``` 
 frontend web_proxy_http
@@ -142,4 +139,45 @@ openssl genrsa -aes128 2048 > server.key
 openssl req -new -key server.key > server.csr
 openssl x509 -in server.csr -days 365000 -req -signkey server.key > server.crt
 chmod 200 server.key
+```
+# Bind9
+```
+apt -y install bind9
+```
+## Common
+vim /etc/bind9/named.conf.options
+```
+dnssec-validation no;//検証しない
+```
+## lb1
+vim /etc/bind9/named.conf.options
+```
+forwarders{200.99.1.1;};//回送
+allow-recursion{localnet};//再帰問い合わせ
+allow-transfer{200.99.1.1;DCIN};//ゾーン転送
+```
+vim /etc/bind9/named.conf.default-zones
+```
+zone "netad.it.jp" {
+    type master;
+    file "/etc/bind/db.netad.it.jp";
+    allow-transfer{SLAVE-IP;};
+    notify yes;
+}
+```
+vim /etc/bind9/db.netad.it.jp
+```
+Add records by the case...
+```
+## dcin
+vim /etc/bind9/named.conf.options
+```
+forwarders{lb1-IP;};//回送
+```
+vim /etc/bind9/named.conf.default-zones
+```
+zone "netad.it.jp" {
+    type slave;
+    masters{lb1-IP;};
+}
 ```
