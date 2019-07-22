@@ -176,3 +176,4 @@ Cisco(config)# interface Dialer 0
 Cisco(config-if)# ip access-group OUTBOUND out 
 Cisco(config-if)# ip access-group INBOUND in
 ```
+- 上記以外は許可しない。
