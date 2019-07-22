@@ -16,13 +16,15 @@ redis-cli set skills:index "Today is the ${today} and current time is ${curtime}
 $apt install apache2 php php-redis
 ```
 
-/etc/apache2/mods-enabled/dir.conf
+/etc/apache2/mods-enabled/dir.conf  
 2nd line: Set the file name accessible only by the directory name
   ```
   DirectoryIndex index.php
   ```
+  
+/var/www/html/index.php
 
-```php:/var/www/html/index.php
+```php:index.php
 <?php
  echo ’<h1>’, gethostname(), ’</h1>’;
 ?>
@@ -32,7 +34,9 @@ $apt install apache2 php php-redis
 $mkdir /var/www/html/redis
 ```
 
-```php:/var/www/html/redis/index.php
+/var/www/html/redis/index.php
+
+```php:index.php
 <?php
  echo ’<h1>’, gethostname(), ’</h1>’;
  $redis=new Redis();
