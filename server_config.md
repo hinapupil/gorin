@@ -51,5 +51,10 @@ $mkdir /var/www/html/redis
 ```
 $apt install rsync
 $vi /root/web_sync.sh
-> rsync -auvz -delete /var/www www2@20.0.0.4:/var/www
+```
+
+web_sync.sh
+
+```bash:web_sync.sh
+rsync -auvz -delete /var/www www2@20.0.0.4:/var/www
 ```
