@@ -140,3 +140,40 @@
     ```
 - DCRT1 と RORT を IPsecVPN 接続する。
     - DCRT1-RORT 間に 10.1.0.0/30（DCRT1 側が若番）のアドレスを使用したトンネルインターフェ ース Tunnel0 を作成し、IPSec VTI(Vitual Tunnel Interface)として設定する。
+
+# アクセスコントロール
+アクセスコントロール RORT の Dialer0 での通信について、アクセスコントロールを以下の通り設定しなさい。
+- すべての送信元から RORT 自身に対する ICMP トラフィックを許可する。  
+```access-list 100 permit icmp   host any Dialer 0```
+
+- RORT と DCRT1 間の通信はすべて許可する。  
+```
+access-list 100 permit any 200.100.10.1 Dialer 0
+access-list 100 permit any Dialer 0 200.100.10.1
+```
+
+- RORT と DCRT2 間の通信はすべて許可する。  
+```
+access-list 100 permit any 200.100.20.1 Dialer 0
+access-list 100 permit any Dialer 0 200.100.20.1
+```
+
+- ROLAN からの NAPT された発信トラフィックとそれに対する戻りトラフィックを許可する。
+```
+Cisco(config)# ip access-list extened OUTBOUND
+Cisco(config-ext-nacl)# permit icmp any any
+Cisco(config-ext-nacl)# permit tcp any any　reflect TCPACL timeout 120
+```
+
+```
+Cisco(config)# ip access-list extened INBOUND
+Cisco(config-ext-nacl)# permit icmp any any
+Cisco(config-ext-nacl)# evaluate TCPACL
+```
+
+```
+Cisco(config)# interface Dialer 0
+Cisco(config-if)# ip access-group OUTBOUND out 
+Cisco(config-if)# ip access-group INBOUND in
+```
+- 上記以外は許可しない。

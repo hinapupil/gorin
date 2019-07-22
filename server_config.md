@@ -5,7 +5,7 @@ $redis-cli set skills:index "Today is the 2019-01-01 and current time is 00:00"
 ```
 
 ~/today.sh
-```bash:today:sh
+```bash:today.sh
 #!/bin/bash
 today=$(date "+%Y-%m-%d")
 curtime=$(date "+%H:%M")
@@ -56,5 +56,6 @@ $vi /root/web_sync.sh
 web_sync.sh
 
 ```bash:web_sync.sh
+#!/bin/bash
 rsync -auvz -delete /var/www www2@20.0.0.4:/var/www
 ```
