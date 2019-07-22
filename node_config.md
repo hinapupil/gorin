@@ -138,12 +138,12 @@
     dialer-list 1 protocol ip permit
     !
     ```
-- DCRT1 と RORT を IPsecVPN 接続する。
-    - DCRT1-RORT 間に 10.1.0.0/30（DCRT1 側が若番）のアドレスを使用したトンネルインターフェ ース Tunnel0 を作成し、IPSec VTI(Vitual Tunnel Interface)として設定する。
+- DCRT1 と RORT を [IPsecVPN](https://www.infraexpert.com/study/ipsec13.html) 接続する。
+    - DCRT1-RORT 間に 10.1.0.0/30（DCRT1 側が若番）のアドレスを使用したトンネルインターフェ ース Tunnel0 を作成し、[IPSec VTI](http://klock-3rd.hatenablog.com/entry/2015/04/18/180147)(Vitual Tunnel Interface)として設定する。
 
 # ゲートウェイの冗長化  
 DCRT1 と DCRT2 において、以下の条件を満足するようにゲートウェイの冗長構成を実現しなさい。
-- VLAN20 について、VRRP を次の通り動作させる。
+- VLAN20 について、[VRRP](https://www.infraexpert.com/study/fhrpz07.html) を次の通り動作させる。
 	- DCRT2 を Master ルータとする。
 ```
 DCRT2(config) # interface vlan 20
@@ -156,7 +156,7 @@ DCRT1(config-if) # ip address  192.169.101.253 255.255.255.0
 DCRT1(config-if) # vrrp 20 ip 192.168.101.254
 ```
 
-- VLAN101 について、HSRP を次の通り動作させる。
+- VLAN101 について、[HSRP](https://www.infraexpert.com/study/fhrpz07.html) を次の通り動作させる。
 	- DCRT1 を Active ルータとする。
 ```
 DCRT1(config) # interface vlan 101
@@ -172,8 +172,18 @@ DCRT2(config-if) # standby 101 ip 20.0.0.14
 DCRT2(config-if) # standby 101 priority 100
 ```
 
+# NAPT
+アドレス変換を以下の通り設定しなさい。
+- ROLAN(172.16.1.0/24)からインターネット（想定）へ接続できるように RORT に NAPT を設定しなさい。使用するグローバルアドレスは Dialer0 に設定されているアドレスとする。
+
+# スイッチ設定
+スイッチについて以下の通り各種設定を行いなさい。  
+- 各スイッチ（DCSW1, DCSW2）について、管理アドレスおよび適切なデフォルトルートを設定する。
+- DCSW1 と DCSW2 間の接続について、[Etherchannel](https://www.infraexpert.com/study/etherchannelz4.html) を設定する。
+
 # アクセスコントロール
-アクセスコントロール RORT の Dialer0 での通信について、アクセスコントロールを以下の通り設定しなさい。
+アクセスコントロール RORT の Dialer0 での通信について、アクセスコントロールを以下の通り設定しなさい。[拡張ACL](https://www.infraexpert.com/study/aclz5.html)
+
 - すべての送信元から RORT 自身に対する ICMP トラフィックを許可する。  
 ```access-list 100 permit icmp   host any Dialer 0```
 
@@ -189,7 +199,8 @@ access-list 100 permit any 200.100.20.1 Dialer 0
 access-list 100 permit any Dialer 0 200.100.20.1
 ```
 
-- ROLAN からの NAPT された発信トラフィックとそれに対する戻りトラフィックを許可する。
+- ROLAN からの NAPT された発信トラフィックとそれに対する戻りトラフィックを許可する。[再帰ACL](https://www.infraexpert.com/study/aclz13.html)?
+
 ```
 Cisco(config)# ip access-list extened OUTBOUND
 Cisco(config-ext-nacl)# permit icmp any any
