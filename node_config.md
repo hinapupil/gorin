@@ -98,9 +98,9 @@
     RORT(config-router)#network 20.0.0.0 0.0.0.15 area 0
     RORT(config-router)#network 192.168.101.0 0.0.0.255 area 0
     ```
-		
+
 	- インターネット側（トンネル回線除く）と ROSW 側へ OSPF 経路情報を流さないこと。
-	
+
 ## WAN 設定
 - RORT にて PPPoE クライアント設定を行い ISP-C（PPPoE サーバ設定済み）と接続する。
 ※ISP-C から IPCP によって固定アドレスが払い出される。
