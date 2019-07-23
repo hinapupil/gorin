@@ -83,21 +83,21 @@
 	DCRT1(config-router)#network　172.16.1.0 0.0.0.255 area 0
 	DCRT1(config-router)#network 20.0.0.0 0.0.0.15 area 0
 	DCRT1(config-router)#network 192.168.101.0 0.0.0.255 area 0
-    ```
+  ```
     
 	```
-    DCRT2(config)#router ospf 1
-    DCRT2(config-router)#network　172.16.1.0 0.0.0.255 area 0
-    DCRT2(config-router)#network 20.0.0.0 0.0.0.15 area 0
-    DCRT2(config-router)#network 192.168.101.0 0.0.0.255 area 0
-    ```
-    
+  DCRT2(config)#router ospf 1
+  DCRT2(config-router)#network　172.16.1.0 0.0.0.255 area 0
+  DCRT2(config-router)#network 20.0.0.0 0.0.0.15 area 0
+  DCRT2(config-router)#network 192.168.101.0 0.0.0.255 area 0
+  ```
+  
 	```
 	RORT(config)#router ospf 1
-    RORT(config-router)#network　172.16.1.0 0.0.0.255 area 0
-    RORT(config-router)#network 20.0.0.0 0.0.0.15 area 0
-    RORT(config-router)#network 192.168.101.0 0.0.0.255 area 0
-    ```
+  RORT(config-router)#network　172.16.1.0 0.0.0.255 area 0
+  RORT(config-router)#network 20.0.0.0 0.0.0.15 area 0
+  RORT(config-router)#network 192.168.101.0 0.0.0.255 area 0
+  ```
 
 	- インターネット側（トンネル回線除く）と ROSW 側へ OSPF 経路情報を流さないこと。
 
@@ -139,7 +139,61 @@
     !
     ```
 - DCRT1 と RORT を [IPsecVPN](https://www.infraexpert.com/study/ipsec13.html) 接続する。
-    - DCRT1-RORT 間に 10.1.0.0/30（DCRT1 側が若番）のアドレスを使用したトンネルインターフェ ース Tunnel0 を作成し、[IPSec VTI](http://klock-3rd.hatenablog.com/entry/2015/04/18/180147)(Vitual Tunnel Interface)として設定する。
+    - DCRT1-RORT 間に 10.1.0.0/30（DCRT1 側が若番）のアドレスを使用したトンネルインターフェ ース Tunnel0 を作成し、[IPSec VTI](http://klock-3rd.hatenablog.com/entry/2015/04/18/180147)([Vitual Tunnel Interface](https://www.cisco.com/c/ja_jp/td/docs/sec/securmgmt/worksaccesscntrllistmgr/ug/001/sec-secure-connectivity-15-1s/sec-ipsec-virt-tunnl.pdf))として設定する。
+
+```
+crypto IPsec profile profile-name
+set transform-set transform-set-name
+interface type number
+ip address address mask
+tunnel mode ipsec ipv4
+tunnel source interface
+tunnel destination ip-address
+tunnel protection IPsec profile profile-name [shared]
+```
+
+```
+crypto isakmp policy 1
+    encry 3des
+    hash md5
+    authentication pre-share
+    group 2
+crypto isakmp key cisco address 200.1.1.1
+crypto isakmp keepalive 30 periodic
+crypto ipsec transform-set IPSEC esp-3des esp-md5-hmac
+crypto map M-ipsec 1 ipsec-isakmp
+    set peer 200.1.1.1
+    set transform-set IPSEC
+    match address A-ipsec
+interface Loopback1
+    ip address 100.1.1.1 255.255.255.255
+interface GigabitEthernet 0/0
+    pppoe enable group global
+    pppoe-client dial-pool-number 1
+    no cdp enable
+interface GigabitEthernet0/1
+    ip address 192.168.1.254 255.255.255.0
+    ip tcp adjust-mss 1356
+interface Dialer1
+    ip unnumbered Loopback1
+    ip access-group A-security in
+    ip mtu 1454
+    encapsulation ppp
+    dialer pool 1
+    dialer-group 1
+    no cdp enable
+    ppp authentication chap callin
+    ppp chap hostname cisco@cisco.com
+    ppp chap password cisco
+    crypto map M-ipsec
+ip route 0.0.0.0 0.0.0.0 Dialer1
+ip access-list extended A-ipsec
+    permit ip 192.168.1.0 0.0.0.255 192.168.2.0 0.0.0.255
+ip access-list extended A-security
+    permit esp host 200.1.1.1 host 100.1.1.1
+    permit udp host 200.1.1.1 host 100.1.1.1 eq isakmp
+dialer-list 1 protocol ip permit
+```
 
 # ゲートウェイの冗長化  
 DCRT1 と DCRT2 において、以下の条件を満足するようにゲートウェイの冗長構成を実現しなさい。
