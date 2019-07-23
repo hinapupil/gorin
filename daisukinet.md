@@ -79,6 +79,57 @@ ip access-list extended A-security
     permit udp host 200.1.1.1 host 100.1.1.1 eq isakmp
 dialer-list 1 protocol ip permit
 ```
+## IPsecVPN New
+```
+crypto isakmp policy 1
+    encry 3des
+    hash md5
+    authentication pre-share
+    group 2
+crypto isakmp key cisco address 200.1.1.1
+crypto isakmp keepalive 30 periodic
+crypto ipsec transform-set IPSEC esp-3des esp-md5-hmac
+crypto ipsec profile VTI
+    set transform-set IPSEC
+interface tunnel 0
+    ip add 192.168.100.1 255.255.255.0
+    tunnel source loopback 1
+    tunnel destination 200.1.1.1
+    tunnel mode ipsec ipv4
+    tunnel protection ipsec profile VTI
+crypto map M-ipsec 1 ipsec-isakmp
+    set peer 200.1.1.1
+    set transform-set IPSEC
+    match address A-ipsec
+interface Loopback1
+    ip address 100.1.1.1 255.255.255.255
+interface GigabitEthernet 0/0
+    pppoe enable group global
+    pppoe-client dial-pool-number 1
+    no cdp enable
+interface GigabitEthernet0/1
+    ip address 192.168.1.254 255.255.255.0
+    ip tcp adjust-mss 1356
+interface Dialer1
+    ip unnumbered Loopback1
+    ip access-group A-security in
+    ip mtu 1454
+    encapsulation ppp
+    dialer pool 1
+    dialer-group 1
+    no cdp enable
+    ppp authentication chap callin
+    ppp chap hostname cisco@cisco.com
+    ppp chap password cisco
+    crypto map M-ipsec
+ip route 0.0.0.0 0.0.0.0 Dialer1
+ip access-list extended A-ipsec
+    permit ip 192.168.1.0 0.0.0.255 192.168.2.0 0.0.0.255
+ip access-list extended A-security
+    permit esp host 200.1.1.1 host 100.1.1.1
+    permit udp host 200.1.1.1 host 100.1.1.1 eq isakmp
+dialer-list 1 protocol ip permit
+```
 # Samba
 ## Server
 ```
@@ -195,11 +246,4 @@ zone "netad.it.jp" {
 interface vlan 1
     ip add 192.168.1.1 255.255.255.0
 ip default-gateway 192.168.1.254
-```
-## Etherchannel
-```
-interface range gi 1/0/2 - 3 //0は固定1スタックの２から３まで
-    switchport trunkencapsulation dot1q
-    switchport mode trunk
-    channel-group 1 mode on
 ```
