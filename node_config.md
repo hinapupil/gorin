@@ -140,7 +140,8 @@
     ```
 - DCRT1 と RORT を [IPsecVPN](https://www.infraexpert.com/study/ipsec13.html) 接続する。
     - DCRT1-RORT 間に 10.1.0.0/30（DCRT1 側が若番）のアドレスを使用したトンネルインターフェ ース Tunnel0 を作成し、[IPSec VTI](http://klock-3rd.hatenablog.com/entry/2015/04/18/180147)([Vitual Tunnel Interface](https://www.cisco.com/c/ja_jp/td/docs/sec/securmgmt/worksaccesscntrllistmgr/ug/001/sec-secure-connectivity-15-1s/sec-ipsec-virt-tunnl.pdf))として設定する。
-
+  
+example
 ```
 crypto IPsec profile profile-name
 set transform-set transform-set-name
@@ -153,46 +154,51 @@ tunnel protection IPsec profile profile-name [shared]
 ```
 
 ```
+<DCRT1>
+!
 crypto isakmp policy 1
-    encry 3des
-    hash md5
-    authentication pre-share
-    group 2
-crypto isakmp key cisco address 200.1.1.1
-crypto isakmp keepalive 30 periodic
-crypto ipsec transform-set IPSEC esp-3des esp-md5-hmac
-crypto map M-ipsec 1 ipsec-isakmp
-    set peer 200.1.1.1
-    set transform-set IPSEC
-    match address A-ipsec
-interface Loopback1
-    ip address 100.1.1.1 255.255.255.255
-interface GigabitEthernet 0/0
-    pppoe enable group global
-    pppoe-client dial-pool-number 1
-    no cdp enable
-interface GigabitEthernet0/1
-    ip address 192.168.1.254 255.255.255.0
-    ip tcp adjust-mss 1356
-interface Dialer1
-    ip unnumbered Loopback1
-    ip access-group A-security in
-    ip mtu 1454
-    encapsulation ppp
-    dialer pool 1
-    dialer-group 1
-    no cdp enable
-    ppp authentication chap callin
-    ppp chap hostname cisco@cisco.com
-    ppp chap password cisco
-    crypto map M-ipsec
-ip route 0.0.0.0 0.0.0.0 Dialer1
-ip access-list extended A-ipsec
-    permit ip 192.168.1.0 0.0.0.255 192.168.2.0 0.0.0.255
-ip access-list extended A-security
-    permit esp host 200.1.1.1 host 100.1.1.1
-    permit udp host 200.1.1.1 host 100.1.1.1 eq isakmp
-dialer-list 1 protocol ip permit
+authentication pre-share
+group 2
+crypto isakmp key cisco address 10.1.0.1
+!
+!
+crypto ipsec transform-set TRANSFORM esp-des esp-sha-hmac 
+!
+crypto ipsec profile VTI
+set transform-set TRANSFORM 
+!
+interface Tunnel0
+ip address 10.1.0.1 255.255.255.252
+tunnel source GigabitEthernet0/1
+tunnel mode ipsec ipv4
+tunnel destination 10.1.0.2
+tunnel protection ipsec profile VTI
+!
+ip route 0.0.0.0 0.0.0.0 GigabitEthernet0/1
+!
+!
+!
+<RORT>
+!
+crypto isakmp policy 1
+authentication pre-share
+group 2
+crypto isakmp key cisco address 10.1.0.2
+!
+!
+crypto ipsec transform-set TRANSFORM esp-des esp-sha-hmac 
+!
+crypto ipsec profile VTI
+set transform-set TRANSFORM 
+!
+interface Tunnel0
+ip address 10.1.0.2 255.255.255.252
+tunnel source Dialer 0
+tunnel mode ipsec ipv4
+tunnel destination 10.1.0.1
+tunnel protection ipsec profile VTI
+!
+ip route 0.0.0.0 0.0.0.0 Dialer 0
 ```
 
 # ゲートウェイの冗長化  
