@@ -189,3 +189,17 @@ zone "netad.it.jp" {
     masters{lb1-IP;};
 }
 ```
+# Switch
+## IP & GW
+```
+interface vlan 1
+    ip add 192.168.1.1 255.255.255.0
+ip default-gateway 192.168.1.254
+```
+## Etherchannel
+```
+interface range gi 1/0/2 - 3 //0は固定1スタックの２から３まで
+    switchport trunkencapsulation dot1q
+    switchport mode trunk
+    channel-group 1 mode on
+```
