@@ -93,7 +93,7 @@ crypto ipsec profile VTI
     set transform-set IPSEC
 interface tunnel 0
     ip add 192.168.100.1 255.255.255.0
-    tunnel source loopback 1
+    tunnel source gi0/0
     tunnel destination 200.1.1.1
     tunnel mode ipsec ipv4
     tunnel protection ipsec profile VTI
