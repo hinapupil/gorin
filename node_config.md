@@ -248,6 +248,13 @@ DCRT2(config-if) # standby 101 priority 100
 - 各スイッチ（DCSW1, DCSW2）について、管理アドレスおよび適切なデフォルトルートを設定する。
 - DCSW1 と DCSW2 間の接続について、[Etherchannel](https://www.infraexpert.com/study/etherchannelz4.html) を設定する。
 
+```
+Catalyst(config) # interface range gigabitethernet 1/0/1 -2 
+Catalyst(config-if-range) # switchport trunk encapsulation dot1q
+Catalyst(config-if-range) # switchport mode trunk
+Catalyst(config-if-range) # channel-group 1 mode on
+```
+
 # アクセスコントロール
 アクセスコントロール RORT の Dialer0 での通信について、アクセスコントロールを以下の通り設定しなさい。[拡張ACL](https://www.infraexpert.com/study/aclz5.html)
 
