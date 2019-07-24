@@ -56,21 +56,29 @@
 	DCRT2(config)#router bgp 100
 	```
 	
-	- DCRT1 は ISP-A と eBGP ピアを確立する。
+	- DCRT1 は ISP-A と eBGP ピアを確立する。  
 	```DCRT1(config-router)#neighbor 200.100.10.2 remote-as 200```
-	- DCRT2 は ISP-B と eBGP ピアを確立する。	
+	- DCRT2 は ISP-B と eBGP ピアを確立する。	  
 	```DCRT2(config-router)#neighbor 200.100.20.2 remote-as 300```
 	- インターネット側から 20.0.0.0/28 宛てのトラフィックについて、ISP-B→DCRT2 を経由する 経路を優先経路とする。この経路に障害が発生した場合は、ISP-A→DCRT1 を経由する経路に 自律的に切り替わること。
 		
 		```
-		DCRT1(config-router)#network 20.0.0.0 mask 255.255.255.240
+		DCRT1(config)#interface GigabitEthernet 0/0
+		DCRT1(config-if)#bfd interval 50 min_rx 50 multiplier 3
+		DCRT1(config)#router bgp 100
+		DCRT1(config-router)#neighbor 200.100.10.2 fall-over bfd
 		DCRT1(config-rputer)#neighbor 200.100.10.2 weight 100
+		DCRT1(config-router)#network 20.0.0.0 mask 255.255.255.240
 		```
 		
 		```
-    	DCRT2(config-router)#network 20.0.0.0 mask 255.255.255.240
-        DCRT2(config-router)#neighbor 200.100.10.2 weight 200
-        ```
+   	DCRT2(config)#interface GigabitEthernet 0/0
+		DCRT2(config-if)#bfd interval 50 min_rx 50 multiplier 3
+		DCRT2(config)#router bgp 100
+		DCRT2(config-router)#neighbor 200.100.20.2 fall-over bfd
+   	DCRT2(config-router)#neighbor 200.100.20.2 weight 200
+		DCRT2(config-router)#network 20.0.0.0 mask 255.255.255.240
+    ```
 		
 - RORT,DCRT1,DCRT2 において次の通り OSPF を動作させる
 	- プライベートアドレスセグメントについて経路交換を行う。
