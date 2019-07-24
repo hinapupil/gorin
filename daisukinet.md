@@ -247,3 +247,12 @@ interface vlan 1
     ip add 192.168.1.1 255.255.255.0
 ip default-gateway 192.168.1.254
 ```
+# BFD & BGP
+int gi0/0
+    ip add 192.168.1.1
+    bfd interval 50 min_rx 50 multiplier 3
+router bgp zzz
+    neighbor x.x.x.x fall-over bfd
+router ospf zzz
+    network xxxx yyy area 0
+    bfd all interfaces
