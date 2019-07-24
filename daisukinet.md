@@ -256,3 +256,12 @@ router bgp zzz
 router ospf zzz
     network xxxx yyy area 0
     bfd all interfaces
+# ルーター初期化
+```
+alt + b
+confreg 0x2142 // rom読み込まない
+reset
+```
+```
+config-register 0x2102 //rom読み込む　だから再起動時にwriteが反映される
+```
