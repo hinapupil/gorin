@@ -252,7 +252,10 @@ DCRT2(config-if) # standby 101 priority 100
 アクセスコントロール RORT の Dialer0 での通信について、アクセスコントロールを以下の通り設定しなさい。[拡張ACL](https://www.infraexpert.com/study/aclz5.html)
 
 - すべての送信元から RORT 自身に対する ICMP トラフィックを許可する。  
-```access-list 100 permit icmp   host any Dialer 0```
+```
+access-list 100 permit icmp host any Dialer 0
+access-list 100 permit icmp host any 172.16.1.0
+```
 
 - RORT と DCRT1 間の通信はすべて許可する。  
 ```
