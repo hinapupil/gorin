@@ -7,9 +7,6 @@
 - コマンド履歴バッファの保存数を100行に設定する。  
 ```Router#terminal history size 100```
 
-- ルータ上のHTTPサーバは停止する。  
-```Router(config)#no ip http server```
-
 - 日時を手動設定する。競技場との誤差は５分以内にする。  
 ```Router#clock set 21:10:00 14 June 2019```
 
