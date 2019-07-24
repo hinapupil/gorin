@@ -139,10 +139,13 @@ RORT,DCRT1,DCRT2 において次の通り OSPF を動作させる。
     !
     ip route 0.0.0.0 0.0.0.0 Dialer 0
     !
-    ip nat inside source list 1 interface Dialer 0 overload
+    ip nat inside source list INBOUND interface Dialer 0 overload
+    ip nat inside source list OUTBOUND interface Dialer 0 overload
     !
-    access-list 1 permit 172.16.1.0 0.0.0.255
-    dialer-list 1 protocol ip permit
+    access-list INBOUND permit 172.16.1.0 0.0.0.255
+    access-list OUTBOUND permit 172.16.1.0 0.0.0.255
+    dialer-list INBOUND protocol ip permit
+    dialer-list OUTBOUND protocol ip permit
     !
     ```
 - DCRT1 と RORT を [IPsecVPN](https://www.infraexpert.com/study/ipsec13.html) 接続する。
@@ -261,7 +264,7 @@ Catalyst(config-if-range) # channel-group 1 mode on
 - すべての送信元から RORT 自身に対する ICMP トラフィックを許可する。  
 ```
 access-list 100 permit icmp host any Dialer 0
-access-list 100 permit icmp host any 172.16.1.0
+access-list 100 permit icmp host any 172.16.1.254
 ```
 
 - RORT と DCRT1 間の通信はすべて許可する。  
@@ -280,13 +283,11 @@ access-list 100 permit any Dialer 0 200.100.20.1
 
 ```
 Cisco(config)# ip access-list extened OUTBOUND
-Cisco(config-ext-nacl)# permit icmp any any
-Cisco(config-ext-nacl)# permit tcp any any　reflect TCPACL timeout 120
+Cisco(config-ext-nacl)# permit tcp any any reflect TCPACL timeout 120
 ```
 
 ```
 Cisco(config)# ip access-list extened INBOUND
-Cisco(config-ext-nacl)# permit icmp any any
 Cisco(config-ext-nacl)# evaluate TCPACL
 ```
 
