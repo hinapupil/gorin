@@ -83,26 +83,26 @@
 - RORT,DCRT1,DCRT2 において次の通り OSPF を動作させる
 	- プライベートアドレスセグメントについて経路交換を行う。
 	
-	```
-	DCRT1(config)#router ospf 1
-	DCRT1(config-router)#network　172.16.1.0 0.0.0.255 area 0
-	DCRT1(config-router)#network 20.0.0.0 0.0.0.15 area 0
-	DCRT1(config-router)#network 192.168.101.0 0.0.0.255 area 0
-  ```
+		```
+		DCRT1(config)#router ospf 1
+		DCRT1(config-router)#network　172.16.1.0 0.0.0.255 area 0
+		DCRT1(config-router)#network 20.0.0.0 0.0.0.15 area 0
+		DCRT1(config-router)#network 192.168.101.0 0.0.0.255 area 0
+  	```
     
-	```
-  DCRT2(config)#router ospf 1
-  DCRT2(config-router)#network　172.16.1.0 0.0.0.255 area 0
-  DCRT2(config-router)#network 20.0.0.0 0.0.0.15 area 0
-  DCRT2(config-router)#network 192.168.101.0 0.0.0.255 area 0
-  ```
+		```
+  	DCRT2(config)#router ospf 1
+  	DCRT2(config-router)#network　172.16.1.0 0.0.0.255 area 0
+  	DCRT2(config-router)#network 20.0.0.0 0.0.0.15 area 0
+  	DCRT2(config-router)#network 192.168.101.0 0.0.0.255 area 0
+  	```
   
-	```
-	RORT(config)#router ospf 1
-  RORT(config-router)#network　172.16.1.0 0.0.0.255 area 0
-  RORT(config-router)#network 20.0.0.0 0.0.0.15 area 0
-  RORT(config-router)#network 192.168.101.0 0.0.0.255 area 0
-  ```
+		```
+		RORT(config)#router ospf 1
+  	RORT(config-router)#network　172.16.1.0 0.0.0.255 area 0
+  	RORT(config-router)#network 20.0.0.0 0.0.0.15 area 0
+  	RORT(config-router)#network 192.168.101.0 0.0.0.255 area 0
+  	```
 
 	- インターネット側（トンネル回線除く）と ROSW 側へ OSPF 経路情報を流さないこと。
 
