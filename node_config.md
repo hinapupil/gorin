@@ -249,7 +249,7 @@ DCRT2(config-if) # standby 101 priority 100
 - DCSW1 と DCSW2 間の接続について、[Etherchannel](https://www.infraexpert.com/study/etherchannelz4.html) を設定する。
 
 ```
-Catalyst(config) # interface range gigabitethernet 1/0/1 -2 
+Catalyst(config) # interface range gigabitethernet 0/1 - 8
 Catalyst(config-if-range) # switchport trunk encapsulation dot1q
 Catalyst(config-if-range) # switchport mode trunk
 Catalyst(config-if-range) # channel-group 1 mode on
