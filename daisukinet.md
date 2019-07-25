@@ -79,7 +79,7 @@ ip access-list extended A-security
     permit udp host 200.1.1.1 host 100.1.1.1 eq isakmp
 dialer-list 1 protocol ip permit
 ```
-## IPsecVPN New
+## Tunnel With IPsecVPN
 ```
 crypto isakmp policy 1
     encry 3des
@@ -97,38 +97,6 @@ interface tunnel 0
     tunnel destination 200.1.1.1
     tunnel mode ipsec ipv4
     tunnel protection ipsec profile VTI
-crypto map M-ipsec 1 ipsec-isakmp
-    set peer 200.1.1.1
-    set transform-set IPSEC
-    match address A-ipsec
-interface Loopback1
-    ip address 100.1.1.1 255.255.255.255
-interface GigabitEthernet 0/0
-    pppoe enable group global
-    pppoe-client dial-pool-number 1
-    no cdp enable
-interface GigabitEthernet0/1
-    ip address 192.168.1.254 255.255.255.0
-    ip tcp adjust-mss 1356
-interface Dialer1
-    ip unnumbered Loopback1
-    ip access-group A-security in
-    ip mtu 1454
-    encapsulation ppp
-    dialer pool 1
-    dialer-group 1
-    no cdp enable
-    ppp authentication chap callin
-    ppp chap hostname cisco@cisco.com
-    ppp chap password cisco
-    crypto map M-ipsec
-ip route 0.0.0.0 0.0.0.0 Dialer1
-ip access-list extended A-ipsec
-    permit ip 192.168.1.0 0.0.0.255 192.168.2.0 0.0.0.255
-ip access-list extended A-security
-    permit esp host 200.1.1.1 host 100.1.1.1
-    permit udp host 200.1.1.1 host 100.1.1.1 eq isakmp
-dialer-list 1 protocol ip permit
 ```
 # Samba
 ## Server
@@ -196,27 +164,26 @@ chmod 200 server.key
 apt -y install bind9
 ```
 ## Common
-vim /etc/bind9/named.conf.options
+vim /etc/bind/named.conf.options
 ```
 dnssec-validation no;//検証しない
 ```
 ## lb1
-vim /etc/bind9/named.conf.options
+vim /etc/bind/named.conf.options
 ```
 forwarders{200.99.1.1;};//回送
-allow-recursion{localnet};//再帰問い合わせ
+allow-recursion{20.0.0.0/28;};//再帰問い合わせ
 allow-transfer{200.99.1.1;DCIN};//ゾーン転送
 ```
-vim /etc/bind9/named.conf.default-zones
+vim /etc/bind/named.conf.default-zones
 ```
 zone "netad.it.jp" {
     type master;
     file "/etc/bind/db.netad.it.jp";
-    allow-transfer{SLAVE-IP;};
     notify yes;
 }
 ```
-vim /etc/bind9/db.netad.it.jp
+vim /etc/bind/db.netad.it.jp
 ```
 Add records by the case...
 EX:
@@ -229,11 +196,11 @@ EX:
     mail IN MAX 10 sv1.example.org. //10 is priority
 ```
 ## dcin
-vim /etc/bind9/named.conf.options
+vim /etc/bind/named.conf.options
 ```
 forwarders{lb1-IP;};//回送
 ```
-vim /etc/bind9/named.conf.default-zones
+vim /etc/bind/named.conf.default-zones
 ```
 zone "netad.it.jp" {
     type slave;
