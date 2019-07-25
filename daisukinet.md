@@ -164,10 +164,8 @@ chmod 200 server.key
     学び
     recursion = 再帰
     forwardがうまくいかないときはallow-recursionをチェック
-    参考URL
 ```
-[DNSフォワーディング](https://go-journey.club/archives/1430)
-
+参考URL : [DNSフォワーディング](https://go-journey.club/archives/1430)
 ```
 apt -y install bind9
 ```
