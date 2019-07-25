@@ -165,7 +165,7 @@ chmod 200 server.key
 recursion = 再帰
 forwardがうまくいかないときはallow-recursionをチェック
 ```
-![fsafdsa](https://go-journey.club/wp-content/uploads/2017/04/SnapCrab_NoName_2017-4-15_16-44-4_No-00.png)  
+![再帰　反復　違い　イメージ](https://go-journey.club/wp-content/uploads/2017/04/SnapCrab_NoName_2017-4-15_16-44-4_No-00.png)  
 参考URL : [DNSフォワーディング](https://go-journey.club/archives/1430)
 ```
 apt -y install bind9
