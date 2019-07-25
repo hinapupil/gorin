@@ -161,6 +161,14 @@ chmod 200 server.key
 ```
 # Bind9
 ```
+    学び
+    recursion = 再帰
+    forwardがうまくいかないときはallow-recursionをチェック
+    参考URL
+```
+[DNSフォワーディング](https://go-journey.club/archives/1430)
+
+```
 apt -y install bind9
 ```
 ## Common
@@ -198,13 +206,13 @@ EX:
 ## dcin
 vim /etc/bind/named.conf.options
 ```
-forwarders{lb1-IP;};//回送
+forwarders{20.0.0.1;};//回送
 ```
 vim /etc/bind/named.conf.default-zones
 ```
 zone "netad.it.jp" {
     type slave;
-    masters{lb1-IP;};
+    masters{20.0.0.1;};
 }
 ```
 # Switch
