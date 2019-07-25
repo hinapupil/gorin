@@ -164,18 +164,18 @@ chmod 200 server.key
 apt -y install bind9
 ```
 ## Common
-vim /etc/bind9/named.conf.options
+vim /etc/bind/named.conf.options
 ```
 dnssec-validation no;//検証しない
 ```
 ## lb1
-vim /etc/bind9/named.conf.options
+vim /etc/bind/named.conf.options
 ```
 forwarders{200.99.1.1;};//回送
-allow-recursion{localnet};//再帰問い合わせ
+allow-recursion{20.0.0.0/28;};//再帰問い合わせ
 allow-transfer{200.99.1.1;DCIN};//ゾーン転送
 ```
-vim /etc/bind9/named.conf.default-zones
+vim /etc/bind/named.conf.default-zones
 ```
 zone "netad.it.jp" {
     type master;
@@ -183,7 +183,7 @@ zone "netad.it.jp" {
     notify yes;
 }
 ```
-vim /etc/bind9/db.netad.it.jp
+vim /etc/bind/db.netad.it.jp
 ```
 Add records by the case...
 EX:
@@ -196,11 +196,11 @@ EX:
     mail IN MAX 10 sv1.example.org. //10 is priority
 ```
 ## dcin
-vim /etc/bind9/named.conf.options
+vim /etc/bind/named.conf.options
 ```
 forwarders{lb1-IP;};//回送
 ```
-vim /etc/bind9/named.conf.default-zones
+vim /etc/bind/named.conf.default-zones
 ```
 zone "netad.it.jp" {
     type slave;
