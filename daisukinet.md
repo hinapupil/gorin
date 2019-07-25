@@ -119,7 +119,7 @@ smbpasswd -a user
 groupadd share_group
 gpasswd -a user share_group
 mkdir /home/user/samaba
-chgrp share_group
+chgrp share_group /home/user/samaba
 chmod 770 /home/user/samaba
 ```
 ## Client

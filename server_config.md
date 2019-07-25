@@ -60,15 +60,26 @@ $mkdir /var/www/html/redis
 ```
 
 # Web contents sync
-
+## コピー先端末
 ```
-$apt install rsync
-$vi /root/web_sync.sh
+apt -y install rsync
+```
+vim /etc/rsyncd.conf //新規作成
+```
+[backup]
+path = /var/www
+hosts allow = 10.0.0.30
+hosts deny = *
+uid = root
+gid = root
+read only = false
+```
+```
+systemctl restart rsync
 ```
 
-web_sync.sh
-
-```bash:web_sync.sh
-#!/bin/bash
-rsync -auvz -delete /var/www www2@20.0.0.4:/var/www
+## コピー元端末
+```
+apt -y install rsync
+rsync -avz --delete /var/www/ hisip::backup
 ```
