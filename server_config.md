@@ -51,14 +51,16 @@ $mkdir /var/www/html/redis
  echo $content;
 ?>
 ```
+
 /etc/redis/redis.conf
+
 ```
 #chenge Line 61
-```
 61: bind 192.168.101
 ```
 
 # Web contents sync
+
 ```
 $apt install rsync
 $vi /root/web_sync.sh
