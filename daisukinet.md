@@ -2,7 +2,7 @@
 vim ~/.vimrc  
 ```
 syntax on  
-set number 
+set number
 set tabstop=4
 ```
 ```
