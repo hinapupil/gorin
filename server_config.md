@@ -22,6 +22,11 @@ $apt install apache2 php php-redis
   ```
   DirectoryIndex index.php
   ```
+or  
+```
+$rm /var/www/html/index.html
+$rm /var/www/html/redis/index.html
+```
   
 /var/www/html/index.php
 
@@ -45,6 +50,12 @@ $mkdir /var/www/html/redis
  $content=$redis->get(’skills:index’);
  echo $content;
 ?>
+```
+/etc/redis/redis.conf
+```
+#chenge Line 61
+```
+61: bind 192.168.101
 ```
 
 # Web contents sync
