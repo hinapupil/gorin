@@ -83,3 +83,27 @@ systemctl restart rsync
 apt -y install rsync
 rsync -avz --delete /var/www/ hisip::backup
 ```
+# DNS  
+
+/etc/interfaces
+```
+dns-nameservers 20.0.0.1
+dns-search netad.it.jp
+
+
+# [CA](https://qiita.com/makoto1899/items/ef15372d4cf4621a674e)  
+
+/etc/ssl/openssl.conf
+```
+dir = /ca
+```
+
+```bash
+$ mkdir -p /ca/private
+$ chmod 700 /ca/private
+$ cd /ca
+$ openssl req -new -x509 -newkey rsa:2048 -out cacert.pem -keyout private/cakey.pem -days 365
+$ chmod 200 /ca/private/cakey.pem
+$ openssl x509 -in /ca/cacert.pem -text | less //証明書が正しく出来たかを確認する
+```
+
