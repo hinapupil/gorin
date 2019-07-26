@@ -89,12 +89,13 @@ rsync -avz --delete /var/www/ hisip::backup
 ```
 dns-nameservers 20.0.0.1
 dns-search netad.it.jp
-
+```
 
 # CA  
 [参考](https://qiita.com/makoto1899/items/ef15372d4cf4621a674e)  
 
 /etc/ssl/openssl.conf
+
 ```
 dir = /ca
 ```
