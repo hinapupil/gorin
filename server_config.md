@@ -25,7 +25,7 @@ $apt install apache2 php php-redis
 or  
 ```
 $rm /var/www/html/index.html
-$rm /var/www/html/redis/index.html
+$mkdir /var/www/html/redis
 ```
   
 /var/www/html/index.php
