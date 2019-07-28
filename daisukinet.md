@@ -252,4 +252,6 @@ apt install ssh
 touch /home/master/ca
 ```
 ## client
+```
 scp master@serverip:/home/master/ca ~/pass
+```
