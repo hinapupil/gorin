@@ -252,3 +252,22 @@ gpasswd -a user share_group
 mkdir /home/user/samaba
 chgrp share_group /home/user/samaba
 chmod 770 /home/user/samaba
+# LVM
+```
+fdisk -l //現在のディスクの状況確認
+fdisk /dev/sdb
+n //new
+p //primary
+8e //file system type "LVM"
+w //write
+fdisk -l /dev/sdb //パーティションが作成されたことを確認
+pvcreate /dev/sdb1 /dev/sdc1　//物理ボリュームの作成
+pvdisplay　//確認
+vgcreate lvg-share /dev/sdb1 /dev/sdc1　//lvg-share ボリュームグループを作成
+vgdisplay　//確認
+lvcreate --name public --size 18GB lvg-share　//論理ボリュームを作成
+lvdisplay //確認
+mkfs.ext4 /dev/lvg-share/public //public論理デバイスにext4ファイルシステムを作成する
+sudo mount /dev/lvg-share/public /mnt/public >> /etc/profile //マウント
+source /etc/profile
+```
