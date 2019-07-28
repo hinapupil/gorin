@@ -244,3 +244,5 @@ mkfs.ext4 /dev/lvg-share/public //public論理デバイスにext4ファイルシ
 sudo mount /dev/lvg-share/public /mnt/public >> /etc/profile //マウント
 source /etc/profile
 ```
+# コマンド一覧を表示するのコマンド
+compgen -ac //-a aliasも表示 -cコマンドを表示？
