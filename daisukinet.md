@@ -175,6 +175,16 @@ zone "netad.it.jp" {
     masters{20.0.0.1;};
 }
 ```
+```
+view view_name {
+  match-clients { list; };
+  match-destinations { list; }
+  // and other options
+}
+match-clients はリクエスト元のソースIPでマッチを行う。
+match-destinations はリクエストを受け付けるインターフェースのIPアドレスでマッチを行う。
+複数の view にリクエストがマッチする場合は、named.conf の先頭に近い条件が適用される。
+```
 # Switch
 ## IP & GW
 ```
