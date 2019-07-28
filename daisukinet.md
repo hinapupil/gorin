@@ -175,7 +175,7 @@ zone "netad.it.jp" {
     masters{20.0.0.1;};
 }
 ```
-## 
+##
 ```
 view view_name {
   match-clients { list; };
