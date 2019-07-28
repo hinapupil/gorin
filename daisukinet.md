@@ -225,33 +225,6 @@ XKBLAYOUT="us"
 XKBMODEL="jp106"
 XKBLAYOUT="jp"
 ```
-
-
-
-
-
-
-
-
-
-
-apt -y install samba
-vim /etc/samba/smb.conf
-
-[Home]
-hosts allow = 192.168.1.0/24
-path = /home/user/samaba
-#guest ok = yes
-writable = yes
-valid users = @share_group
-useradd -m user
-passwd user
-smbpasswd -a user
-groupadd share_group
-gpasswd -a user share_group
-mkdir /home/user/samaba
-chgrp share_group /home/user/samaba
-chmod 770 /home/user/samaba
 # LVM
 ```
 fdisk -l //現在のディスクの状況確認
