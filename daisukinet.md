@@ -1,3 +1,7 @@
+# wakaran
+man bind9  
+ospfパケット流す範囲制限  
+バイト　開放日
 # Recommend
 vim ~/.vimrc  
 ```
@@ -241,3 +245,11 @@ reset
 ```
 config-register 0x2102 //rom読み込む　だから再起動時にwriteが反映される
 ```
+# SCP
+## server
+```
+apt install ssh
+touch /home/master/ca
+```
+## client
+scp master@serverip:/home/master/ca ~/pass
