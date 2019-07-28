@@ -255,3 +255,16 @@ touch /home/master/ca
 ```
 scp master@serverip:/home/master/ca ~/pass
 ```
+# キーボード変更
+## 英語キーボード
+/etc/default/keyboard
+```
+XKBMODEL="pc105"
+XKBLAYOUT="us"
+```
+## 日本語キーボード
+/etc/default/keyboard
+```
+XKBMODEL="jp106"
+XKBLAYOUT="jp"
+```
