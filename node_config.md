@@ -283,7 +283,7 @@ access-list 100 permit any Dialer 0 200.100.20.1
 
 ```
 Cisco(config)# ip access-list extened OUTBOUND
-Cisco(config-ext-nacl)# permit tcp any any reflect TCPACL timeout 120
+Cisco(config-ext-nacl)# permit ip any any reflect TCPACL timeout 120
 ```
 
 ```
