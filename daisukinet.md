@@ -257,3 +257,19 @@ source /etc/profile
 ```
 # コマンド一覧を表示するのコマンド
 compgen -ac //-a aliasも表示 -cコマンドを表示？
+# ACLとか
+![再帰　反復　違い　イメージ](https://www.infraexpert.com/studygif/aclz20.gif)
+![再帰　反復　違い　イメージ](https://www.infraexpert.com/studygif/natz13.gif)
+```
+　Cisco(config) # ip nat outside source static 10.1.1.10 192.168.1.20
+
+　Cisco(config) # interface GigabitEthernet0/1
+　Cisco(config-if) # ip address 192.168.1.254 255.255.255.0
+　Cisco(config-if) # ip nat inside
+
+　Cisco(config) # interface GigabitEthernet0/0
+　Cisco(config-if) # ip address 10.1.1.254 255.255.255.0
+　Cisco(config-if) # ip nat outside
+
+　Cisco(config) # ip route 192.168.1.20 255.255.255.255 GigabitEthernet0/0
+```
